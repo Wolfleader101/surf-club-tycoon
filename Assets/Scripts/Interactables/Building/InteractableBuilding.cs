@@ -7,7 +7,7 @@ namespace Interactables.Building
     {
         public override void OnInteract()
         {
-            throw new System.NotImplementedException();
+            Debug.Log($"Building Name: {name}");
         }
     }
 }

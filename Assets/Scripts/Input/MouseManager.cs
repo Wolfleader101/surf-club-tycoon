@@ -11,6 +11,8 @@ public class MouseManager : MonoBehaviour
     [SerializeField] private GameObject cursorFollow;
 
     private Vector2 _mousePos;
+    private Vector3 _mouseWorldPos;
+    private WorldInteractable _selectedInteractable;
 
     private void Start()
     {
@@ -24,6 +26,7 @@ public class MouseManager : MonoBehaviour
     void Update()
     {
         FollowCursor();
+        DragObject();
     }
 
     public void OnMouseMove(InputAction.CallbackContext context)
@@ -44,7 +47,8 @@ public class MouseManager : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(_mousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, groundLayerMask))
         {
-            cursorFollow.transform.position = hit.point;
+            _mouseWorldPos = hit.point;
+            cursorFollow.transform.position = _mouseWorldPos;
         }
     }
 
@@ -53,7 +57,26 @@ public class MouseManager : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(_mousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, objectsLayerMask))
         {
-            Debug.Log(hit.point);
+            var hitObject = hit.collider.gameObject;
+            var worldInteractable = hitObject.GetComponent<WorldInteractable>();
+            if (worldInteractable != null)
+            {
+                _selectedInteractable = worldInteractable.selected == false ? worldInteractable : null;
+                worldInteractable.selected = !worldInteractable.selected;
+                
+                Debug.Log(hit.point);
+                worldInteractable.OnInteract();
+
+            }
+            
+        }
+    }
+
+    private void DragObject()
+    {
+        if (_selectedInteractable != null && _selectedInteractable.selected)
+        {
+            _selectedInteractable.Drag(_mouseWorldPos + new Vector3(0, 0.5f, 0));
         }
     }
 }
