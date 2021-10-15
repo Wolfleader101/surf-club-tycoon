@@ -11,10 +11,12 @@ public class MouseManager : MonoBehaviour
     [SerializeField] private LayerMask objectsLayerMask;
     [SerializeField] private GameObject cursorFollow;
 
+    [HideInInspector ] public bool isRotating = false;
+
+    
     private Vector2 _mousePos;
     private Vector3 _mouseWorldPos;
     private WorldInteractable _selectedInteractable;
-    private bool _isRotating = false;
 
     private void Start()
     {
@@ -27,8 +29,8 @@ public class MouseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cursorFollow.SetActive(!_isRotating);
-        if (_isRotating) return;
+        cursorFollow.SetActive(!isRotating);
+        if (isRotating) return;
         FollowCursor();
         DragObject();
     }
@@ -40,7 +42,7 @@ public class MouseManager : MonoBehaviour
 
     public void OnMouseClick(InputAction.CallbackContext context)
     {
-        if (context.started && !_isRotating)
+        if (context.started && !isRotating)
         {
             SelectObject();
         }
@@ -49,7 +51,7 @@ public class MouseManager : MonoBehaviour
     public void OnRotateDown(InputAction.CallbackContext context)
     {
         if (!(context.interaction is HoldInteraction)) return;
-        _isRotating = context.started || context.performed;
+        isRotating = context.started || context.performed;
     }
 
     private void FollowCursor()

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem.Interactions;
 public class FreeCam : MonoBehaviour
 {
     [SerializeField] private float rotateSpeed = 2f;
-
+    [SerializeField] private MouseManager inputManager;
 
     private float _mouseX;
     private float _mouseY;
@@ -61,5 +61,6 @@ public class FreeCam : MonoBehaviour
     {
         if (!(context.interaction is HoldInteraction)) return;
         _canRotate = context.started || context.performed;
+        inputManager.isRotating = _canRotate;
     }
 }

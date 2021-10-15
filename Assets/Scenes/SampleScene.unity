@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 10
+  inputManager: {fileID: 1971520516}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,7 +770,7 @@ MonoBehaviour:
     m_ActionName: Camera/RotateButton[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 
+  m_DefaultActionMap: Mouse
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 963194227}
 --- !u!114 &1971520516
@@ -792,6 +793,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   cursorFollow: {fileID: 879340996}
+  isRotating: 0
 --- !u!1 &2147379542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6153929990667693393, guid: bf1c86b69e2db0a48b496e297948f41e, type: 3}
