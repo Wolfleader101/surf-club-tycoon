@@ -64,8 +64,17 @@ public class MouseManager : MonoBehaviour
                 _selectedInteractable = worldInteractable.selected == false ? worldInteractable : null;
                 worldInteractable.selected = !worldInteractable.selected;
                 
-                Debug.Log(hit.point);
                 worldInteractable.OnInteract();
+                
+                if (worldInteractable.selected)
+                {
+                    worldInteractable.PickUp(_mouseWorldPos);
+                }
+                else
+                {
+                    worldInteractable.Drop(_mouseWorldPos);
+                }
+                
 
             }
             

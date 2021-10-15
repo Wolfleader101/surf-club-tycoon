@@ -7,7 +7,5 @@ namespace Interactables
     {
         [SerializeField] protected string interactableName;
         public string InteractableName => interactableName;
-        public abstract void OnInteract();
-
     }
 }
