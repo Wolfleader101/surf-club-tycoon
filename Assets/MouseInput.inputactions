@@ -1,0 +1,33 @@
+{
+    "name": "MouseInput",
+    "maps": [
+        {
+            "name": "Mouse",
+            "id": "163555ed-113a-45e2-ae41-c376803dcd66",
+            "actions": [
+                {
+                    "name": "Pos",
+                    "type": "PassThrough",
+                    "id": "f99bb48b-13ae-4f32-8b45-60e1c3f67d41",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5911060a-9836-46f2-ab90-0ca96a149a37",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
