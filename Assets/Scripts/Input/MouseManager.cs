@@ -68,11 +68,11 @@ public class MouseManager : MonoBehaviour
                 
                 if (worldInteractable.selected)
                 {
-                    worldInteractable.PickUp(_mouseWorldPos);
+                    worldInteractable.Select(_mouseWorldPos);
                 }
                 else
                 {
-                    worldInteractable.Drop(_mouseWorldPos);
+                    worldInteractable.DeSelect(_mouseWorldPos);
                 }
                 
 

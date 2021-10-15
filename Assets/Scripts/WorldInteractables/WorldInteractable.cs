@@ -22,10 +22,6 @@ public class WorldInteractable : MonoBehaviour
     private void Update()
     {
         gameObject.GetComponent<Renderer>().material.color = _highLight ? Color.red : _prevColor;
-        // if (selected)
-        // {
-        //     Drag();
-        // }
     }
 
     public void OnInteract()
@@ -47,12 +43,12 @@ public class WorldInteractable : MonoBehaviour
         gameObject.transform.position = mousePos;
     }
 
-    public void PickUp(Vector3 mousePos)
+    public void Select(Vector3 mousePos)
     {
         Debug.Log($"Pickup Pos: {mousePos}");
     }
 
-    public void Drop(Vector3 mousePos)
+    public void DeSelect(Vector3 mousePos)
     {
         Debug.Log($"Drop Pos: {mousePos}");
     }
