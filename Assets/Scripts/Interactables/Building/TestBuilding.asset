@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: TestBuilding
   m_EditorClassIdentifier: 
   interactableName: Test Building
+  buildingPrice: 50000
