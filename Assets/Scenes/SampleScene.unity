@@ -228,7 +228,6 @@ GameObject:
   - component: {fileID: 879341001}
   - component: {fileID: 879341000}
   - component: {fileID: 879340999}
-  - component: {fileID: 879340997}
   m_Layer: 0
   m_Name: CursorFollow
   m_TagString: Untagged
@@ -236,52 +235,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &879340997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879340996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 1da8fcbd0b48d5843aff108e314a827f, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: FollowCursor, Assembly-CSharp
-        m_MethodName: OnMouseMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: f99bb48b-13ae-4f32-8b45-60e1c3f67d41
-    m_ActionName: Mouse/Pos[/Mouse/position]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Mouse
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 963194227}
 --- !u!135 &879340999
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -612,6 +565,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f99bb48b-13ae-4f32-8b45-60e1c3f67d41
     m_ActionName: Mouse/Pos[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1971520516}
+        m_TargetAssemblyTypeName: MouseManager, Assembly-CSharp
+        m_MethodName: OnMouseClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 22afa846-5651-404d-b48a-a1f8cba19b09
+    m_ActionName: Mouse/Click[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Mouse
@@ -629,7 +598,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b436ef0021fa374183321a0270fc6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  layerMask:
+  mainCamera: {fileID: 963194227}
+  groundLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
+  objectsLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  cursorFollow: {fileID: 879340996}
