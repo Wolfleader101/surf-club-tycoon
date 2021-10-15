@@ -3,11 +3,9 @@
 namespace Interactables
 {
     //[CreateAssetMenu(fileName = "FILENAME", menuName = "Interactables", order = 0)]
-    public abstract class BaseInteractable : ScriptableObject, IInteractable
+    public abstract class BaseInteractable : ScriptableObject
     {
-        public void OnInteract()
-        {
-            throw new System.NotImplementedException();
-        }
+        [SerializeField] protected GameObject gameObject;
+        public abstract void OnInteract();
     }
 }
