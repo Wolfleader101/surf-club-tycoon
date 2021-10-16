@@ -41,10 +41,6 @@ public class FreeCam : MonoBehaviour
             transform.localRotation = Quaternion.Euler(_xRotation, _yRotation, 0f);
 
             transform.position += transform.forward * _zDir + transform.right * _xDir;
-
-            // transform.position =
-            //     new Vector3(transform.localPosition.x + _xDir, transform.localPosition.y, transform.localPosition.z + _zDir);
-
         }
         else
         {
@@ -60,10 +56,6 @@ public class FreeCam : MonoBehaviour
             _xDir = dir.x * moveSpeed * Time.deltaTime;
             _zDir = dir.y * moveSpeed * Time.deltaTime;
         }
-        
-
-        //var motion = transform.right * dir.x + transform.forward * dir.y;
-        //transform.position += motion * moveSpeed * Time.deltaTime;
     }
 
     public void OnRotate(InputAction.CallbackContext context)
