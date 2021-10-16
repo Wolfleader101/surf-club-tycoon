@@ -6,7 +6,8 @@ using UnityEngine.InputSystem.Interactions;
 
 public class FreeCam : MonoBehaviour
 {
-    [SerializeField] private float rotateSpeed = 2f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private MouseManager inputManager;
 
     private float _mouseX;
@@ -15,6 +16,9 @@ public class FreeCam : MonoBehaviour
     private float _xRotation;
     private float _yRotation;
 
+    private float _xDir;
+    private float _zDir;
+    
     private bool _canRotate = false;
 
 
@@ -33,9 +37,14 @@ public class FreeCam : MonoBehaviour
             _xRotation -= _mouseY;
             _yRotation -= _mouseX;
             _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
-            _yRotation = Mathf.Clamp(_yRotation, -180f, 180f);
-
+         
             transform.localRotation = Quaternion.Euler(_xRotation, _yRotation, 0f);
+
+            transform.position += transform.forward * _zDir + transform.right * _xDir;
+
+            // transform.position =
+            //     new Vector3(transform.localPosition.x + _xDir, transform.localPosition.y, transform.localPosition.z + _zDir);
+
         }
         else
         {
@@ -45,6 +54,16 @@ public class FreeCam : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (_canRotate)
+        {
+            var dir = context.ReadValue<Vector2>();
+            _xDir = dir.x * moveSpeed * Time.deltaTime;
+            _zDir = dir.y * moveSpeed * Time.deltaTime;
+        }
+        
+
+        //var motion = transform.right * dir.x + transform.forward * dir.y;
+        //transform.position += motion * moveSpeed * Time.deltaTime;
     }
 
     public void OnRotate(InputAction.CallbackContext context)
