@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
 public class FreeCam : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float fastSpeed = 15f;
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private MouseManager inputManager;
 
@@ -18,6 +20,10 @@ public class FreeCam : MonoBehaviour
 
     private float _xDir;
     private float _zDir;
+    private float _yDir;
+
+    private float _currSpeed;
+    private bool _moveFast = false;
     
     private bool _canRotate = false;
 
@@ -40,7 +46,16 @@ public class FreeCam : MonoBehaviour
          
             transform.localRotation = Quaternion.Euler(_xRotation, _yRotation, 0f);
 
-            transform.position += transform.forward * _zDir + transform.right * _xDir;
+            if (_moveFast)
+            {
+                _currSpeed = fastSpeed * Time.deltaTime;
+            }
+            else
+            {
+                _currSpeed = moveSpeed * Time.deltaTime;
+            }
+            
+            transform.position += transform.forward * _zDir + transform.right * _xDir + transform.up * _yDir;
         }
         else
         {
@@ -53,9 +68,23 @@ public class FreeCam : MonoBehaviour
         if (_canRotate)
         {
             var dir = context.ReadValue<Vector2>();
-            _xDir = dir.x * moveSpeed * Time.deltaTime;
-            _zDir = dir.y * moveSpeed * Time.deltaTime;
+            _xDir = dir.x * _currSpeed;
+            _zDir = dir.y * _currSpeed;
         }
+    }
+
+    public void OnMoveUp(InputAction.CallbackContext context)
+    {
+        _yDir = context.ReadValue<float>() * _currSpeed;
+    }
+    public void OnMoveDown(InputAction.CallbackContext context)
+    {
+        _yDir = -context.ReadValue<float>() * _currSpeed;
+    }
+    
+    public void OnMoveFast(InputAction.CallbackContext context)
+    {
+        _moveFast = context.ReadValue<float>() > 0;
     }
 
     public void OnRotate(InputAction.CallbackContext context)

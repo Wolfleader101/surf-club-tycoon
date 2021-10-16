@@ -74,6 +74,30 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold"
+                },
+                {
+                    "name": "MoveUp",
+                    "type": "PassThrough",
+                    "id": "d2fa7745-23f7-45f6-b4a8-22fa742f8655",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveDown",
+                    "type": "PassThrough",
+                    "id": "154b64ed-fab2-4744-aaf8-4db7e851eedf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveFast",
+                    "type": "PassThrough",
+                    "id": "c7c8cc83-c91d-4dad-af27-b528991cf400",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -151,6 +175,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "RotateButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf33f71a-850f-4285-8103-89419fdedeb0",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b9c076b-d797-4c49-bd55-21ed99fcd6d6",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "44dc44c7-3b3a-48ec-9020-7357876b0648",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveFast",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
