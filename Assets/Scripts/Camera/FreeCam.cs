@@ -37,6 +37,17 @@ public class FreeCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_moveFast)
+        {
+            _currSpeed = fastSpeed * Time.deltaTime;
+        }
+        else
+        {
+            _currSpeed = moveSpeed * Time.deltaTime;
+        }
+            
+        transform.position += transform.forward * _zDir + transform.right * _xDir + transform.up * _yDir;
+        
         if (_canRotate)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -45,17 +56,7 @@ public class FreeCam : MonoBehaviour
             _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
          
             transform.localRotation = Quaternion.Euler(_xRotation, _yRotation, 0f);
-
-            if (_moveFast)
-            {
-                _currSpeed = fastSpeed * Time.deltaTime;
-            }
-            else
-            {
-                _currSpeed = moveSpeed * Time.deltaTime;
-            }
             
-            transform.position += transform.forward * _zDir + transform.right * _xDir + transform.up * _yDir;
         }
         else
         {
@@ -65,12 +66,9 @@ public class FreeCam : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (_canRotate)
-        {
-            var dir = context.ReadValue<Vector2>();
+        var dir = context.ReadValue<Vector2>();
             _xDir = dir.x * _currSpeed;
             _zDir = dir.y * _currSpeed;
-        }
     }
 
     public void OnMoveUp(InputAction.CallbackContext context)
