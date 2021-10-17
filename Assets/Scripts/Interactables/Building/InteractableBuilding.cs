@@ -2,7 +2,7 @@
 
 namespace Interactables.Building
 {
-    [CreateAssetMenu(fileName = "Building", menuName = "Interactable/Building", order = 0)]
+    [CreateAssetMenu(fileName = "Building", menuName = "Interactable/Building")]
     public class InteractableBuilding : BaseInteractable
     {
         [SerializeField] private float buildingPrice;

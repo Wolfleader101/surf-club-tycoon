@@ -8,4 +8,4 @@ namespace Interactables
         [SerializeField] protected string interactableName;
         public string InteractableName => interactableName;
     }
-}
+}                
