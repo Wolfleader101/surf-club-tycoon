@@ -34,7 +34,7 @@ public class WorldInteractable : MonoBehaviour
             return;
         }
         
-        _prevColor = _renderer.material.color = _highLight ? Color.red : _prevColor;
+        _renderer.material.color = _highLight ? Color.red : _prevColor;
     }
 
     public void OnInteract()

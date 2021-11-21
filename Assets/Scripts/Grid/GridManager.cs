@@ -42,7 +42,7 @@ namespace Grid
             plane.transform.position = Vector3.zero;
             plane.transform.localScale = new Vector3((float) gridWidth / 10, 1, (float) gridHeight / 10);
             plane.name = "Ground";
-            plane.layer = LayerMask.GetMask("Ground");
+            plane.layer = LayerMask.NameToLayer("Ground");
         }
     }
 }
