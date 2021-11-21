@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Grid;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -11,11 +12,14 @@ public class MouseManager : MonoBehaviour
     [SerializeField] private LayerMask objectsLayerMask;
     [SerializeField] private GameObject cursorFollow;
 
+    [SerializeField] private GridManager gridManager;
+    
     [HideInInspector ] public bool isRotating = false;
 
     
     private Vector2 _mousePos;
     private Vector3 _mouseWorldPos;
+    private Vector2Int _mouseGridPos;
     private WorldInteractable _selectedInteractable;
 
     private void Start()
@@ -61,6 +65,7 @@ public class MouseManager : MonoBehaviour
         {
             _mouseWorldPos = hit.point;
             cursorFollow.transform.position = _mouseWorldPos;
+            _mouseGridPos = gridManager.Grid.GetGridPos(_mouseWorldPos);
         }
     }
 
@@ -97,7 +102,9 @@ public class MouseManager : MonoBehaviour
     {
         if (_selectedInteractable != null && _selectedInteractable.selected)
         {
-            _selectedInteractable.Drag(_mouseWorldPos + new Vector3(0, 0.5f, 0));
+            _mouseWorldPos = gridManager.Grid.GetWorldPos(_mouseGridPos.x, _mouseGridPos.y);
+
+            _selectedInteractable.Drag(_mouseWorldPos);
         }
     }
 }

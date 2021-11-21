@@ -8,6 +8,7 @@ using UnityEngine;
 public class WorldInteractable : MonoBehaviour
 {
     [SerializeField] private BaseInteractable interactable;
+    [SerializeField] private Renderer _renderer;
 
     [HideInInspector] public bool selected = false;
 
@@ -16,12 +17,24 @@ public class WorldInteractable : MonoBehaviour
 
     private void Start()
     {
-        _prevColor = gameObject.GetComponent<Renderer>().material.color;
+        if (_renderer == null)
+        {
+            _prevColor = gameObject.GetComponentInChildren<Renderer>().material.color;
+            return;
+        }
+
+        _prevColor = _renderer.material.color;
     }
 
     private void Update()
     {
-        gameObject.GetComponent<Renderer>().material.color = _highLight ? Color.red : _prevColor;
+        if (_renderer == null)
+        {
+            gameObject.GetComponentInChildren<Renderer>().material.color = _highLight ? Color.red : _prevColor;
+            return;
+        }
+        
+        _prevColor = _renderer.material.color = _highLight ? Color.red : _prevColor;
     }
 
     public void OnInteract()
@@ -40,7 +53,7 @@ public class WorldInteractable : MonoBehaviour
 
     public void Drag(Vector3 mousePos)
     {
-        gameObject.transform.position = mousePos;
+        transform.position = mousePos;
     }
 
     public void Select(Vector3 mousePos)

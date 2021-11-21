@@ -62,7 +62,7 @@ namespace Grid
         public Vector2Int GetGridPos(Vector3 worldPos)
         {
             var x = Mathf.FloorToInt((worldPos - _origin).x / _cellSize);
-            var y = Mathf.FloorToInt((worldPos - _origin).y / _cellSize);
+            var y = Mathf.FloorToInt((worldPos - _origin).z / _cellSize);
             return new Vector2Int(x, y);
         }
 

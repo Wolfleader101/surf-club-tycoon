@@ -17,6 +17,12 @@ namespace Grid
 
         private Grid<GridItem> _grid;
 
+        public Grid<GridItem> Grid => _grid;
+
+        public int GridWidth => gridWidth;
+        public int GridHeight => gridHeight;
+        public float CellSize => cellSize;
+
         private void Awake()
         {
             _grid = new Grid<GridItem>(gridWidth, gridHeight, cellSize, origin);
