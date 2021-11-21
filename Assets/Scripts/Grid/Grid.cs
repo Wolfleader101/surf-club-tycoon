@@ -10,7 +10,7 @@ namespace Grid
         private Vector3 _origin;
         private T[,] _gridArray;
 
-        public Grid(int width, int height, float cellSize, Vector3 origin)
+        public Grid(int width, int height, float cellSize, Vector3 origin, bool debugOnly = false)
         {
             _width = width;
             _height = height;
@@ -22,13 +22,36 @@ namespace Grid
             {
                 for (int y = 0; y < _gridArray.GetLength(1); ++y)
                 {
-                    Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1), Color.cyan, 100f);
-                    Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y), Color.cyan, 100f);
+                    // if (debugOnly)
+                    // {
+                    //     Gizmos.color = Color.cyan;
+                    //     Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1));
+                    //     Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y));
+                    // }
                 }
             }
 
-            Debug.DrawLine(GetWorldPos(0, height), GetWorldPos(width, height), Color.cyan, 100f);
-            Debug.DrawLine(GetWorldPos(width, 0), GetWorldPos(width, height), Color.cyan, 100f);
+            // if (debugOnly)
+            // {
+            //     Gizmos.DrawLine(GetWorldPos(0, height), GetWorldPos(width, height));
+            //     Gizmos.DrawLine(GetWorldPos(width, 0), GetWorldPos(width, height));
+            // }
+        }
+
+        public void DrawDebugLines()
+        {
+            for (int x = 0; x < _gridArray.GetLength(0); ++x)
+            {
+                for (int y = 0; y < _gridArray.GetLength(1); ++y)
+                {
+                    Gizmos.color = Color.cyan;
+                    Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1));
+                    Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y));
+                }
+            }
+
+            Gizmos.DrawLine(GetWorldPos(0, _height), GetWorldPos(_width, _height));
+            Gizmos.DrawLine(GetWorldPos(_width, 0), GetWorldPos(_width, _height));
         }
 
         public Vector3 GetWorldPos(int x, int y)
