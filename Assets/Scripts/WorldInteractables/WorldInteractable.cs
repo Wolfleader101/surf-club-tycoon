@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Interactables;
-using Interactables.Building;
+using ScriptableObjects.GridItems;
+using ScriptableObjects.GridItems.Interactables;
 using UnityEngine;
 
 public class WorldInteractable : MonoBehaviour
 {
-    [SerializeField] private BaseInteractable interactable;
+    [SerializeField] private GridItem gridItem;
     [SerializeField] private Renderer _renderer;
 
     [HideInInspector] public bool selected = false;
@@ -43,8 +40,8 @@ public class WorldInteractable : MonoBehaviour
 
         if (selected)
         {
-            Debug.Log($"Interactable Name: {interactable.InteractableName}");
-            if (interactable is InteractableBuilding building)
+            Debug.Log($"Item Name: {gridItem.ItemName}");
+            if (gridItem is InteractableBuilding building)
             {
                 Debug.Log($"Building Price: {building.BuildingPrice}");
             }

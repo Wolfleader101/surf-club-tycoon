@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Interactables.Building
+namespace ScriptableObjects.GridItems.Interactables
 {
     [CreateAssetMenu(fileName = "Building", menuName = "Interactable/Building")]
-    public class InteractableBuilding : BaseInteractable
+    public class InteractableBuilding : GridItem
     {
         [SerializeField] private Transform prefab;
-        [SerializeField] private string buildingName;
         [SerializeField] private float buildingPrice;
         public float BuildingPrice => buildingPrice;
     }

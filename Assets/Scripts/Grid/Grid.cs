@@ -18,25 +18,19 @@ namespace Grid
             _origin = origin;
             _gridArray = new T[width, height];
 
-            for (int x = 0; x < _gridArray.GetLength(0); ++x)
-            {
-                for (int y = 0; y < _gridArray.GetLength(1); ++y)
-                {
-                    // if (debugOnly)
-                    // {
-                    //     Gizmos.color = Color.cyan;
-                    //     Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1));
-                    //     Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y));
-                    // }
-                }
-            }
-            
-
-            // if (debugOnly)
+            // for (int x = 0; x < _gridArray.GetLength(0); ++x)
             // {
-            //     Gizmos.DrawLine(GetWorldPos(0, height), GetWorldPos(width, height));
-            //     Gizmos.DrawLine(GetWorldPos(width, 0), GetWorldPos(width, height));
+            //     for (int y = 0; y < _gridArray.GetLength(1); ++y)
+            //     {
+            //         // if (debugOnly)
+            //         // {
+            //         //     Gizmos.color = Color.cyan;
+            //         //     Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1));
+            //         //     Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y));
+            //         // }
+            //     }
             // }
+            
         }
 
         public void DrawDebugLines()

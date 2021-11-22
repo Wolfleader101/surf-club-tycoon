@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be8fb4005498034c9fde4d3f0c5ae5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: {fileID: 11400000, guid: 4f821a0264d15564488ca72aa3e4c18c, type: 2}
+  gridItem: {fileID: 11400000, guid: 4f821a0264d15564488ca72aa3e4c18c, type: 2}
   _renderer: {fileID: 1964842389}
   selected: 0
 --- !u!65 &1298862
@@ -378,6 +378,7 @@ MonoBehaviour:
   gridHeight: 20
   cellSize: 1
   origin: {x: -10, y: 0, z: -10}
+  ground: {fileID: 0}
   debugLines: 1
 --- !u!4 &921704882
 Transform:
