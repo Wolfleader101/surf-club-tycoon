@@ -113,7 +113,7 @@ public class MouseManager : MonoBehaviour
         // if there is something set it back to its previous position (save that in a temp var when selected)
         if (!valid)
         {
-            Debug.Log("Not Valid");
+            Debug.LogWarning("Not Valid");
             worldInteractable.transform.position = worldInteractable.prevBuildingLoc;
         }
         else
@@ -153,9 +153,7 @@ public class MouseManager : MonoBehaviour
     {
         for (var x = startingX; x < startingX + gridSizeX; ++x)
         {
-            for (var y = startingY;
-                y < startingY + gridSizeY;
-                ++y)
+            for (var y = startingY; y < startingY + gridSizeY; ++y)
             {
                 gridManager.Grid.SetCellValue(x, y, value);
             }

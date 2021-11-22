@@ -79,7 +79,7 @@ public class WorldInteractable : MonoBehaviour
 
     public void Select(Vector3 mousePos)
     {
-        prevBuildingLoc = mousePos;
+        prevBuildingLoc = transform.position;
         Debug.Log($"Pickup Pos: {mousePos}");
     }
 
