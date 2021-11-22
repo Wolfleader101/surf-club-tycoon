@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2daeb8895f344a30b07e5e7eee7e3a50, type: 3}
   m_Name: TestBuilding
   m_EditorClassIdentifier: 
-  interactableName: Test Building
+  itemName: Test Building
+  prefab: {fileID: 0}
   buildingPrice: 50000
