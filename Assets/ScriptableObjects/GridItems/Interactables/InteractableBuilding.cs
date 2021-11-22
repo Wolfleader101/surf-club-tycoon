@@ -10,9 +10,7 @@ namespace ScriptableObjects.GridItems.Interactables
     {
         [SerializeField] private Transform prefab;
         
-        [FormattedPrice]
-        [SerializeField] private float buildingPrice;
-        
+        [SerializeField, FormattedPrice] private float buildingPrice;
         
         public float BuildingPrice => buildingPrice;
     }

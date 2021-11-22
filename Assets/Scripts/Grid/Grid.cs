@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Grid
 {
@@ -8,7 +9,8 @@ namespace Grid
         private int _height;
         private float _cellSize;
         private Vector3 _origin;
-        private T[,] _gridArray;
+        
+        [ShowInInspector] private T[,] _gridArray;
 
         public Grid(int width, int height, float cellSize, Vector3 origin, bool debugOnly = false)
         {

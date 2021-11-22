@@ -1,4 +1,5 @@
 using Grid;
+using ScriptableObjects.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -11,10 +12,10 @@ public class MouseManager : MonoBehaviour
     [SerializeField] private GameObject cursorFollow;
 
     [SerializeField] private GridManager gridManager;
-    
-    [HideInInspector ] public bool isRotating = false;
 
-    
+    [HideInInspector] public bool isRotating = false;
+
+
     private Vector2 _mousePos;
     private Vector3 _mouseWorldPos;
     private Vector2Int _mouseGridPos;
@@ -78,21 +79,18 @@ public class MouseManager : MonoBehaviour
             {
                 _selectedInteractable = worldInteractable.selected == false ? worldInteractable : null;
                 worldInteractable.selected = !worldInteractable.selected;
-                
+
                 worldInteractable.OnInteract();
-                
+
                 if (worldInteractable.selected)
                 {
                     worldInteractable.Select(_mouseWorldPos);
                 }
                 else
                 {
-                    worldInteractable.DeSelect(_mouseWorldPos);
+                    DropObject(worldInteractable);
                 }
-                
-
             }
-            
         }
     }
 
@@ -104,5 +102,62 @@ public class MouseManager : MonoBehaviour
 
             _selectedInteractable.Drag(_mouseWorldPos);
         }
+    }
+
+    private void DropObject(WorldInteractable worldInteractable)
+    {
+        // on drop
+        // check if there is nothing else on its location (check for its size aswell)
+        var valid = true;
+        Vector2Int worldInteractableGridPos =
+            gridManager.Grid.GetGridPos(worldInteractable.transform.position);
+        Debug.Log(worldInteractableGridPos);
+        for (var x = worldInteractableGridPos.x;
+            x < worldInteractableGridPos.x + worldInteractable.GridItem.ItemSize.x && valid;
+            ++x)
+        {
+            for (var y = worldInteractableGridPos.y;
+                y < worldInteractableGridPos.y + worldInteractable.GridItem.ItemSize.y;
+                ++y)
+            {
+                if (gridManager.Grid.GetCellValue(x, y) == null) continue;
+                valid = false;
+                break;
+            }
+        }
+
+        // if there is something set it back to its previous position (save that in a temp var when selected)
+        if (!valid)
+        {
+            Debug.Log("Not Valid");
+            worldInteractable.transform.position = worldInteractable.prevBuildingLoc;
+        }
+        else
+        {
+            // if its empty then set the grid locations to the item
+            SetGridLocation(worldInteractableGridPos, worldInteractable.GridItem.ItemSize, worldInteractable);
+
+            // set the previous values to null
+            var prevLocGridPos = gridManager.Grid.GetGridPos(worldInteractable.prevBuildingLoc);
+            SetGridLocation(prevLocGridPos, worldInteractable.GridItem.ItemSize, null);
+        }
+                    
+        worldInteractable.DeSelect(_mouseWorldPos);
+    }
+
+    private void SetGridLocation(int startingX, int startingY, int gridSizeX, int gridSizeY, WorldInteractable value)
+    {
+        for (var x = startingX; x < startingX + gridSizeX; ++x)
+        {
+            for (var y = startingY; y < startingY + gridSizeY;
+                ++y)
+            {
+                gridManager.Grid.SetCellValue(x, y, value);
+            }
+        }
+    }
+    private void SetGridLocation(Vector2Int position, Vector2Int gridSize, WorldInteractable value)
+    {
+        SetGridLocation(position.x, position.y, gridSize.x, gridSize.y, value);
     }
 }

@@ -1,6 +1,9 @@
+using Grid;
 using ScriptableObjects.GridItems;
 using ScriptableObjects.GridItems.Interactables;
+using ScriptableObjects.Managers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WorldInteractable : MonoBehaviour
 {
@@ -8,12 +11,33 @@ public class WorldInteractable : MonoBehaviour
     [SerializeField] private Renderer _renderer;
 
     [HideInInspector] public bool selected = false;
+    [HideInInspector] public Vector3 prevBuildingLoc;
 
+    public GridItem GridItem => gridItem;
+    
     private bool _highLight = false;
     private Color _prevColor;
 
+    private GridManager _gridManager;
+
     private void Start()
     {
+        prevBuildingLoc = transform.position;
+
+        var gridManagerRef = FindObjectOfType<GridManagerRef>();
+        _gridManager = gridManagerRef.Manager;
+        
+        Vector2Int worldInteractableGridPos = _gridManager.Grid.GetGridPos(transform.position);
+        
+        // if its empty then place it and set the grid locations to the item
+        for (var x = worldInteractableGridPos.x; x < worldInteractableGridPos.x + gridItem.ItemSize.x; ++x)
+        {
+            for (var y = worldInteractableGridPos.y; y < worldInteractableGridPos.y + gridItem.ItemSize.y; ++y)
+            {
+                _gridManager.Grid.SetCellValue(x, y, this);
+            }
+        }
+        
         if (_renderer == null)
         {
             _prevColor = gameObject.GetComponentInChildren<Renderer>().material.color;
@@ -55,6 +79,7 @@ public class WorldInteractable : MonoBehaviour
 
     public void Select(Vector3 mousePos)
     {
+        prevBuildingLoc = mousePos;
         Debug.Log($"Pickup Pos: {mousePos}");
     }
 
