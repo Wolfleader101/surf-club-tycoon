@@ -45,37 +45,17 @@ public class MouseManager : MonoBehaviour
 
     public void OnMouseClick(InputAction.CallbackContext context)
     {
-        if (context.started && !isRotating)
+        if (!context.started || isRotating) return;
+        // if you currently have an object selected 
+        if (_selectedInteractable != null)
         {
-            // on click
-            // if you currently have an object selected 
-            if (_selectedInteractable != null)
-            {
-                // then raycast to the click point
-                // and place the object
-                _selectedInteractable.OnInteract();
-                DropObject(_selectedInteractable);
-                _selectedInteractable = null;
-            }
-            // otherwise if you dont have an object selected
-
-            else
-            {
-                // see if there is a building where u clicked
-                Ray ray = mainCamera.ScreenPointToRay(_mousePos);
-                if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, objectsLayerMask))
-                {
-                    var hitObject = hit.collider.gameObject;
-                    var worldInteractable = hitObject.GetComponent<WorldInteractable>();
-                    if (worldInteractable != null)
-                    {
-                        _selectedInteractable = worldInteractable;
-                        worldInteractable.OnInteract();
-                        worldInteractable.Select(_mouseWorldPos);
-                    }
-                }
-                
-            }
+            // attempt to drop the object
+            DropObject();
+        }
+        else
+        {
+            // else see if u can select an object
+            SelectObject();
         }
     }
 
@@ -95,10 +75,11 @@ public class MouseManager : MonoBehaviour
             _mouseGridPos = gridManager.Grid.GetGridPos(_mouseWorldPos);
         }
     }
-    
+
     private void DragObject()
     {
-        if (_selectedInteractable != null && _selectedInteractable.selected)
+        //&& _selectedInteractable.selected
+        if (_selectedInteractable != null)
         {
             _mouseWorldPos = gridManager.Grid.GetWorldPos(_mouseGridPos.x, _mouseGridPos.y);
 
@@ -106,29 +87,51 @@ public class MouseManager : MonoBehaviour
         }
     }
 
-    private void DropObject(WorldInteractable worldInteractable)
+    private void SelectObject()
     {
+        // otherwise if you dont have an object selected
+        // see if there is a building where u clicked
+        Ray ray = mainCamera.ScreenPointToRay(_mousePos);
+        if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, objectsLayerMask))
+        {
+            var hitObject = hit.collider.gameObject;
+            var worldInteractable = hitObject.GetComponent<WorldInteractable>();
+            if (worldInteractable != null)
+            {
+                _selectedInteractable = worldInteractable;
+                worldInteractable.OnInteract();
+                worldInteractable.Select(_mouseWorldPos);
+            }
+        }
+    }
+
+    private void DropObject()
+    {
+        _selectedInteractable.OnInteract();
+
         // check if there is nothing else on its location (check for its size aswell)
-        Vector2Int objGridPos = gridManager.Grid.GetGridPos(worldInteractable.transform.position);
-        var valid = ValidGridLocation(objGridPos, worldInteractable.GridItem.ItemSize);
+        Vector2Int objGridPos = gridManager.Grid.GetGridPos(_selectedInteractable.transform.position);
+        var valid = ValidGridLocation(objGridPos, _selectedInteractable.GridItem.ItemSize);
 
         // if there is something set it back to its previous position (save that in a temp var when selected)
         if (!valid)
         {
-            Debug.LogWarning("Not Valid");
-            worldInteractable.transform.position = worldInteractable.prevBuildingLoc;
+            Debug.LogWarning($"{objGridPos} is not a valid grid location");
+            _selectedInteractable.transform.position = _selectedInteractable.prevBuildingLoc;
         }
         else
         {
             // if its empty then set the grid locations to the item
-            SetGridLocation(objGridPos, worldInteractable.GridItem.ItemSize, worldInteractable);
+            SetGridLocation(objGridPos, _selectedInteractable.GridItem.ItemSize, _selectedInteractable);
 
             // set the previous values to null
-            var prevLocGridPos = gridManager.Grid.GetGridPos(worldInteractable.prevBuildingLoc);
-            SetGridLocation(prevLocGridPos, worldInteractable.GridItem.ItemSize, null);
+            var prevLocGridPos = gridManager.Grid.GetGridPos(_selectedInteractable.prevBuildingLoc);
+            SetGridLocation(prevLocGridPos, _selectedInteractable.GridItem.ItemSize, null);
         }
 
-        worldInteractable.DeSelect(_mouseWorldPos);
+        _selectedInteractable.DeSelect(_mouseWorldPos);
+
+        _selectedInteractable = null;
     }
 
     private bool ValidGridLocation(int startingX, int startingY, int gridSizeX, int gridSizeY)
