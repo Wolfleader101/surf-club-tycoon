@@ -110,7 +110,7 @@ public class MouseManager : MonoBehaviour
         _selectedInteractable.OnInteract();
 
         // check if there is nothing else on its location (check for its size aswell)
-        Vector2Int objGridPos = gridManager.Grid.GetGridPos(_selectedInteractable.transform.position);
+        var objGridPos = gridManager.Grid.GetGridPos(_selectedInteractable.transform.position);
         var valid = ValidGridLocation(objGridPos, _selectedInteractable.GridItem.ItemSize);
 
         // if there is something set it back to its previous position (save that in a temp var when selected)
