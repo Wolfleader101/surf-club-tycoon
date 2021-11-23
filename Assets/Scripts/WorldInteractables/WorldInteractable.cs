@@ -10,11 +10,11 @@ public class WorldInteractable : MonoBehaviour
     [SerializeField] private GridItem gridItem;
     [SerializeField] private Renderer _renderer;
 
-    [HideInInspector] public bool selected = false;
+    private bool _selected = false;
     [HideInInspector] public Vector3 prevBuildingLoc;
 
     public GridItem GridItem => gridItem;
-    
+
     private bool _highLight = false;
     private Color _prevColor;
 
@@ -26,9 +26,9 @@ public class WorldInteractable : MonoBehaviour
 
         var gridManagerRef = FindObjectOfType<GridManagerRef>();
         _gridManager = gridManagerRef.Manager;
-        
+
         Vector2Int worldInteractableGridPos = _gridManager.Grid.GetGridPos(transform.position);
-        
+
         // if its empty then place it and set the grid locations to the item
         for (var x = worldInteractableGridPos.x; x < worldInteractableGridPos.x + gridItem.ItemSize.x; ++x)
         {
@@ -37,7 +37,7 @@ public class WorldInteractable : MonoBehaviour
                 _gridManager.Grid.SetCellValue(x, y, this);
             }
         }
-        
+
         if (_renderer == null)
         {
             _prevColor = gameObject.GetComponentInChildren<Renderer>().material.color;
@@ -54,15 +54,16 @@ public class WorldInteractable : MonoBehaviour
             gameObject.GetComponentInChildren<Renderer>().material.color = _highLight ? Color.red : _prevColor;
             return;
         }
-        
+
         _renderer.material.color = _highLight ? Color.red : _prevColor;
     }
 
     public void OnInteract()
     {
         _highLight = !_highLight;
+        _selected = !_selected;
 
-        if (selected)
+        if (_selected)
         {
             Debug.Log($"Item Name: {gridItem.ItemName}");
             if (gridItem is InteractableBuilding building)
@@ -70,6 +71,7 @@ public class WorldInteractable : MonoBehaviour
                 Debug.Log($"Building Price: {building.BuildingPrice}");
             }
         }
+
     }
 
     public void Drag(Vector3 mousePos)

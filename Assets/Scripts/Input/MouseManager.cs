@@ -47,7 +47,35 @@ public class MouseManager : MonoBehaviour
     {
         if (context.started && !isRotating)
         {
-            SelectObject();
+            // on click
+            // if you currently have an object selected 
+            if (_selectedInteractable != null)
+            {
+                // then raycast to the click point
+                // and place the object
+                _selectedInteractable.OnInteract();
+                DropObject(_selectedInteractable);
+                _selectedInteractable = null;
+            }
+            // otherwise if you dont have an object selected
+
+            else
+            {
+                // see if there is a building where u clicked
+                Ray ray = mainCamera.ScreenPointToRay(_mousePos);
+                if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, objectsLayerMask))
+                {
+                    var hitObject = hit.collider.gameObject;
+                    var worldInteractable = hitObject.GetComponent<WorldInteractable>();
+                    if (worldInteractable != null)
+                    {
+                        _selectedInteractable = worldInteractable;
+                        worldInteractable.OnInteract();
+                        worldInteractable.Select(_mouseWorldPos);
+                    }
+                }
+                
+            }
         }
     }
 
@@ -67,33 +95,7 @@ public class MouseManager : MonoBehaviour
             _mouseGridPos = gridManager.Grid.GetGridPos(_mouseWorldPos);
         }
     }
-
-    private void SelectObject()
-    {
-        Ray ray = mainCamera.ScreenPointToRay(_mousePos);
-        if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, objectsLayerMask))
-        {
-            var hitObject = hit.collider.gameObject;
-            var worldInteractable = hitObject.GetComponent<WorldInteractable>();
-            if (worldInteractable != null)
-            {
-                _selectedInteractable = worldInteractable.selected == false ? worldInteractable : null;
-                worldInteractable.selected = !worldInteractable.selected;
-
-                worldInteractable.OnInteract();
-
-                if (worldInteractable.selected)
-                {
-                    worldInteractable.Select(_mouseWorldPos);
-                }
-                else
-                {
-                    DropObject(worldInteractable);
-                }
-            }
-        }
-    }
-
+    
     private void DragObject()
     {
         if (_selectedInteractable != null && _selectedInteractable.selected)
@@ -147,8 +149,7 @@ public class MouseManager : MonoBehaviour
     {
         return ValidGridLocation(position.x, position.y, gridSize.x, gridSize.y);
     }
-    
-    
+
     private void SetGridLocation(int startingX, int startingY, int gridSizeX, int gridSizeY, WorldInteractable value)
     {
         for (var x = startingX; x < startingX + gridSizeX; ++x)
