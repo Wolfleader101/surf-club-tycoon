@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class WorldInteractable : MonoBehaviour
 {
     [SerializeField] private GridItem gridItem;
-    [SerializeField] private Renderer renderer;
+    [SerializeField] private Renderer _renderer;
 
     [HideInInspector] public Vector3 prevBuildingLoc;
 
@@ -38,24 +38,24 @@ public class WorldInteractable : MonoBehaviour
             }
         }
 
-        if (renderer == null)
+        if (_renderer == null)
         {
             _prevColor = gameObject.GetComponentInChildren<Renderer>().material.color;
             return;
         }
 
-        _prevColor = renderer.material.color;
+        _prevColor = _renderer.material.color;
     }
 
     private void Update()
     {
-        if (renderer == null)
+        if (_renderer == null)
         {
             gameObject.GetComponentInChildren<Renderer>().material.color = _selected ? Color.red : _prevColor;
             return;
         }
 
-        renderer.material.color = _selected ? Color.red : _prevColor;
+        _renderer.material.color = _selected ? Color.red : _prevColor;
     }
 
     public void OnInteract()
