@@ -12,8 +12,7 @@ namespace Attributes
         protected override void DrawPropertyLayout(GUIContent label)
         {
             var price = "$" + this.ValueEntry.SmartValue.ToString("#,##0");
-            label.text = "";
-            SirenixEditorGUI.Title($"Building Price ({price})", "", TextAlignment.Left, false);
+            SirenixEditorGUI.Title($"Price ({price})", "", TextAlignment.Left, false);
             this.CallNextDrawer(label);
 
         }

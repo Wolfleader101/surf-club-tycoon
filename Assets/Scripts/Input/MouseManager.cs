@@ -3,6 +3,7 @@ using ScriptableObjects.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using DG.Tweening;
 
 public class MouseManager : MonoBehaviour
 {
