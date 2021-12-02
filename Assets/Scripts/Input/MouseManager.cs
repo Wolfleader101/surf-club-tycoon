@@ -113,8 +113,6 @@ public class MouseManager : MonoBehaviour
         var position = _selectedInteractable.transform.position;
         position = new Vector3(Mathf.Round(position.x), Mathf.Round(position.y), Mathf.Round(position.z));
         var objGridPos = gridManager.Grid.GetGridPos(position);
-        Debug.Log($"transform.position: {position} = {objGridPos}");
-        Debug.Log($"Manual Input: (-3, 0, -8) = {gridManager.Grid.GetGridPos(new Vector3(-3.0f, 0, -8.0f))}");
         var valid = ValidGridLocation(objGridPos, _selectedInteractable.GridItem.ItemSize, _selectedInteractable);
 
         // if there is something set it back to its previous position (save that in a temp var when selected)
