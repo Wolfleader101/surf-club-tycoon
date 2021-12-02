@@ -79,7 +79,6 @@ public class MouseManager : MonoBehaviour
 
     private void DragObject()
     {
-        //&& _selectedInteractable.selected
         if (_selectedInteractable != null)
         {
             _mouseWorldPos = gridManager.Grid.GetWorldPos(_mouseGridPos.x, _mouseGridPos.y);
@@ -111,8 +110,12 @@ public class MouseManager : MonoBehaviour
         _selectedInteractable.OnInteract();
 
         // check if there is nothing else on its location (check for its size aswell)
-        var objGridPos = gridManager.Grid.GetGridPos(_selectedInteractable.transform.position);
-        var valid = ValidGridLocation(objGridPos, _selectedInteractable.GridItem.ItemSize);
+        var position = _selectedInteractable.transform.position;
+        position = new Vector3(Mathf.Round(position.x), Mathf.Round(position.y), Mathf.Round(position.z));
+        var objGridPos = gridManager.Grid.GetGridPos(position);
+        Debug.Log($"transform.position: {position} = {objGridPos}");
+        Debug.Log($"Manual Input: (-3, 0, -8) = {gridManager.Grid.GetGridPos(new Vector3(-3.0f, 0, -8.0f))}");
+        var valid = ValidGridLocation(objGridPos, _selectedInteractable.GridItem.ItemSize, _selectedInteractable);
 
         // if there is something set it back to its previous position (save that in a temp var when selected)
         if (!valid)
@@ -135,13 +138,13 @@ public class MouseManager : MonoBehaviour
         _selectedInteractable = null;
     }
 
-    private bool ValidGridLocation(int startingX, int startingY, int gridSizeX, int gridSizeY)
+    private bool ValidGridLocation(int startingX, int startingY, int gridSizeX, int gridSizeY,WorldInteractable interactable)
     {
         for (var x = startingX; x < startingX + gridSizeX; ++x)
         {
             for (var y = startingY; y < startingY + gridSizeY; ++y)
             {
-                if (gridManager.Grid.GetCellValue(x, y) == null) continue;
+                if (gridManager.Grid.GetCellValue(x, y) == interactable || gridManager.Grid.GetCellValue(x, y) == null) continue;
                 return false;
             }
         }
@@ -149,9 +152,9 @@ public class MouseManager : MonoBehaviour
         return true;
     }
 
-    private bool ValidGridLocation(Vector2Int position, Vector2Int gridSize)
+    private bool ValidGridLocation(Vector2Int position, Vector2Int gridSize, WorldInteractable interactable)
     {
-        return ValidGridLocation(position.x, position.y, gridSize.x, gridSize.y);
+        return ValidGridLocation(position.x, position.y, gridSize.x, gridSize.y, interactable);
     }
 
     private void SetGridLocation(int startingX, int startingY, int gridSizeX, int gridSizeY, WorldInteractable value)

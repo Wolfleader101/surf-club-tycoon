@@ -77,23 +77,9 @@ public class WorldInteractable : MonoBehaviour
     public void Drag(Vector3 mousePos)
     {
         transform.DOMove(mousePos, 0.2f, false);
+        //transform.position = mousePos;
         //transform.position = Vector3.MoveTowards(transform.position, mousePos, 20 * Time.deltaTime);
     }
-    
-    IEnumerator LerpPosition(Vector3 targetPosition, float duration)
-    {
-        float time = 0;
-        Vector3 startPosition = transform.position;
-
-        while (time < duration)
-        {
-            transform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        transform.position = targetPosition;
-    }
-    
 
     public void Select(Vector3 mousePos)
     {
