@@ -5,6 +5,8 @@ using ScriptableObjects.GridItems.Interactables;
 using ScriptableObjects.Managers;
 using UnityEngine;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 
 public class WorldInteractable : MonoBehaviour
 {
@@ -16,11 +18,11 @@ public class WorldInteractable : MonoBehaviour
     public GridItem GridItem => gridItem;
 
     private bool _selected = false;
-
+    
     private Color _prevColor;
 
     private GridManager _gridManager;
-
+    
     private void Start()
     {
         prevBuildingLoc = transform.position;
@@ -57,6 +59,7 @@ public class WorldInteractable : MonoBehaviour
         }
 
         _renderer.material.color = _selected ? Color.red : _prevColor;
+        
     }
 
     public void OnInteract()
@@ -77,7 +80,7 @@ public class WorldInteractable : MonoBehaviour
     public void Drag(Vector3 mousePos)
     {
         transform.DOMove(mousePos, 0.2f, false);
-        //transform.position = mousePos;
+       // transform.position = mousePos;
         //transform.position = Vector3.MoveTowards(transform.position, mousePos, 20 * Time.deltaTime);
     }
 
@@ -89,6 +92,7 @@ public class WorldInteractable : MonoBehaviour
 
     public void DeSelect(Vector3 mousePos)
     {
+        DOTween.Kill(transform);
         //Debug.Log($"Drop Pos: {mousePos}");
     }
 }

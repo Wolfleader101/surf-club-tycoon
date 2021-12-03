@@ -48,7 +48,7 @@ public class MouseManager : MonoBehaviour
     {
         if (!context.started || isRotating) return;
         // if you currently have an object selected 
-        if (_selectedInteractable != null)
+        if (_selectedInteractable)
         {
             // attempt to drop the object
             DropObject();
@@ -79,7 +79,7 @@ public class MouseManager : MonoBehaviour
 
     private void DragObject()
     {
-        if (_selectedInteractable != null)
+        if (_selectedInteractable)
         {
             _mouseWorldPos = gridManager.Grid.GetWorldPos(_mouseGridPos.x, _mouseGridPos.y);
 
@@ -108,17 +108,17 @@ public class MouseManager : MonoBehaviour
     private void DropObject()
     {
         _selectedInteractable.OnInteract();
-
+        
         // check if there is nothing else on its location (check for its size aswell)
         var position = _selectedInteractable.transform.position;
         position = new Vector3(Mathf.Round(position.x), Mathf.Round(position.y), Mathf.Round(position.z));
         var objGridPos = gridManager.Grid.GetGridPos(position);
         var valid = ValidGridLocation(objGridPos, _selectedInteractable.GridItem.ItemSize, _selectedInteractable);
 
+        
         // if there is something set it back to its previous position (save that in a temp var when selected)
         if (!valid)
         {
-            Debug.LogWarning($"{objGridPos} is not a valid grid location");
             _selectedInteractable.transform.position = _selectedInteractable.prevBuildingLoc;
         }
         else
