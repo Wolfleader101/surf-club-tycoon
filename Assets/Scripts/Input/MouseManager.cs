@@ -22,6 +22,9 @@ public class MouseManager : MonoBehaviour
     private Vector2Int _mouseGridPos;
     private WorldInteractable _selectedInteractable;
 
+    public Vector3 mouseWorldPos => _mouseWorldPos;
+    public WorldInteractable selectedInteractable => _selectedInteractable;
+
     private void Start()
     {
         if (mainCamera == null)
@@ -103,6 +106,14 @@ public class MouseManager : MonoBehaviour
                 worldInteractable.Select(_mouseWorldPos);
             }
         }
+    }
+
+    public void SetSelectedBuilding(WorldInteractable worldInteractable)
+    {
+        if (_selectedInteractable != null) return;
+        _selectedInteractable = worldInteractable;
+        worldInteractable.OnInteract();
+        worldInteractable.Select(_mouseWorldPos);
     }
 
     private void DropObject()

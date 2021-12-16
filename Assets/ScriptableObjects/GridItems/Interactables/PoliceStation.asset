@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Police Station
   itemSize: {x: 2, y: 2}
-  prefab: {fileID: 0}
+  prefab: {fileID: 8237960098153511771, guid: 5e47005b0756c884fab596bad47cf08c, type: 3}
   buildingPrice: 500000

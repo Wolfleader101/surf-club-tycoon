@@ -9,6 +9,7 @@ namespace ScriptableObjects.GridItems.Interactables
     public class InteractableBuilding : GridItem
     {
         [SerializeField] private Transform prefab;
+        public Transform Prefab => prefab;
         
         [SerializeField, FormattedPrice] private float buildingPrice;
         

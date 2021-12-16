@@ -22,7 +22,7 @@ public class WorldInteractable : MonoBehaviour
     private Color _prevColor;
 
     private GridManager _gridManager;
-    
+
     private void Start()
     {
         prevBuildingLoc = transform.position;
