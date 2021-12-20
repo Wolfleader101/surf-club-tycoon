@@ -82,12 +82,11 @@ public class MouseManager : MonoBehaviour
 
     private void DragObject()
     {
-        if (_selectedInteractable)
-        {
-            _mouseWorldPos = gridManager.Grid.GetWorldPos(_mouseGridPos.x, _mouseGridPos.y);
+        if (!_selectedInteractable) return;
+        _mouseWorldPos = gridManager.Grid.GetWorldPos(_mouseGridPos.x, _mouseGridPos.y);
 
-            _selectedInteractable.Drag(_mouseWorldPos);
-        }
+        _selectedInteractable.Drag(_mouseWorldPos);
+        canFollow = false;
     }
 
     private void SelectObject()
