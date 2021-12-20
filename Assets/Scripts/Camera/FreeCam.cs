@@ -96,6 +96,6 @@ public class FreeCam : MonoBehaviour
     {
         if (!(context.interaction is HoldInteraction)) return;
         _canRotate = context.started || context.performed;
-        inputManager.isRotating = _canRotate;
+        inputManager.canFollow = !_canRotate;
     }
 }

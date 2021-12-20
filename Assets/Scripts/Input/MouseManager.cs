@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class MouseManager : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class MouseManager : MonoBehaviour
 
     [SerializeField] private GridManager gridManager;
 
-    [HideInInspector] public bool isRotating = false;
+    // [HideInInspector] public bool isRotating = false;
+    [HideInInspector] public bool canFollow = true;
 
 
     private Vector2 _mousePos;
@@ -36,8 +38,11 @@ public class MouseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cursorFollow.SetActive(!isRotating);
-        if (isRotating) return;
+        cursorFollow.SetActive(canFollow);
+
+        canFollow = !EventSystem.current.IsPointerOverGameObject();
+        
+        if (!canFollow) return;
         FollowCursor();
         DragObject();
     }
@@ -49,7 +54,7 @@ public class MouseManager : MonoBehaviour
 
     public void OnMouseClick(InputAction.CallbackContext context)
     {
-        if (!context.started || isRotating) return;
+        if (!context.started ||!canFollow) return;
         // if you currently have an object selected 
         if (_selectedInteractable)
         {
@@ -62,12 +67,7 @@ public class MouseManager : MonoBehaviour
             SelectObject();
         }
     }
-
-    public void OnRotateDown(InputAction.CallbackContext context)
-    {
-        if (!(context.interaction is HoldInteraction)) return;
-        isRotating = context.started || context.performed;
-    }
+    
 
     private void FollowCursor()
     {
