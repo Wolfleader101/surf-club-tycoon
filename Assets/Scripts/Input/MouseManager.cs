@@ -1,3 +1,4 @@
+using System;
 using Grid;
 using ScriptableObjects.Managers;
 using UnityEngine;
@@ -15,9 +16,9 @@ public class MouseManager : MonoBehaviour
 
     [SerializeField] private GridManager gridManager;
 
-    // [HideInInspector] public bool isRotating = false;
-    [HideInInspector] public bool canFollow = true;
-
+   [HideInInspector] public bool isRotating = false;
+    
+    private bool _canFollow = true;
 
     private Vector2 _mousePos;
     private Vector3 _mouseWorldPos;
@@ -38,12 +39,18 @@ public class MouseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cursorFollow.SetActive(canFollow);
-
-        canFollow = !EventSystem.current.IsPointerOverGameObject();
+        cursorFollow.SetActive(_canFollow);
         
-        if (!canFollow) return;
-        if(!selectedInteractable) FollowCursor();
+        _canFollow = !isRotating && !EventSystem.current.IsPointerOverGameObject();
+        
+        if (!_canFollow) return;
+        FollowCursor();
+        
+        // implement new methods
+        // get mouseWorldPos
+        // followCursorPos
+        
+        
         DragObject();
     }
 
@@ -54,7 +61,7 @@ public class MouseManager : MonoBehaviour
 
     public void OnMouseClick(InputAction.CallbackContext context)
     {
-        if (!context.started ||!canFollow) return;
+        if (!context.started ||!_canFollow) return;
         // if you currently have an object selected 
         if (_selectedInteractable)
         {
@@ -75,7 +82,9 @@ public class MouseManager : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, groundLayerMask))
         {
             _mouseWorldPos = hit.point;
+            cursorFollow.SetActive(!selectedInteractable);
             cursorFollow.transform.position = _mouseWorldPos;
+
             _mouseGridPos = gridManager.Grid.GetGridPos(_mouseWorldPos);
         }
     }
