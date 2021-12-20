@@ -43,7 +43,7 @@ public class MouseManager : MonoBehaviour
         canFollow = !EventSystem.current.IsPointerOverGameObject();
         
         if (!canFollow) return;
-        FollowCursor();
+        if(!selectedInteractable) FollowCursor();
         DragObject();
     }
 
@@ -86,7 +86,6 @@ public class MouseManager : MonoBehaviour
         _mouseWorldPos = gridManager.Grid.GetWorldPos(_mouseGridPos.x, _mouseGridPos.y);
 
         _selectedInteractable.Drag(_mouseWorldPos);
-        canFollow = false;
     }
 
     private void SelectObject()
