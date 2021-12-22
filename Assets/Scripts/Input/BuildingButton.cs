@@ -24,7 +24,25 @@ public class BuildingButton : MonoBehaviour
 
     public void OnClick()
     {
-        // instantiate a ghost object of the building
+        // have a ghost game object that has a blueprint shader applied to it
+        // on click based on an ENUM value
+        // set the mesh and enable the blueprint game object
+        // have this blueprint object always follow the cursor position, i.e have it as "selected building"
+        
+        // on placing of the the building, 
+        // check if its a valid grid position
+            // if so then instantiate a building in that position
+            // MAYBE: AND DISABLE the blueprint game object ( or keep it around to place more buildings)
+            // do economy stuff etc
+            
+            
+            
+
+
+
+
+
+            // instantiate a ghost object of the building
         // make the mouse manager drag it around etc
 
         if (mouseManager.selectedInteractable != null) return;

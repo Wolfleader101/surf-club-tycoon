@@ -17,8 +17,10 @@ public class MouseManager : MonoBehaviour
     [SerializeField] private GridManager gridManager;
 
    [HideInInspector] public bool isRotating = false;
+   
     
     private bool _canFollow = true;
+    private int test;
 
     private Vector2 _mousePos;
     private Vector3 _mouseWorldPos;
@@ -46,9 +48,13 @@ public class MouseManager : MonoBehaviour
         if (!_canFollow) return;
         FollowCursor();
         
-        // implement new methods
-        // get mouseWorldPos
-        // followCursorPos
+        /*
+         * TODO
+         * implement new methods
+         * get mouseWorldPos
+         * followCursorPos
+         */
+
         
         
         DragObject();
